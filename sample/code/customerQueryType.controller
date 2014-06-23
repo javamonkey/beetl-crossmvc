@@ -1,7 +1,0 @@
-var type = paras["type"];
-if(type=="1"){
-	var user = {name:'lijz'};
-	forward("/customerList2.html" {user:user})
-}else{
-	forward("/customerList4.html" {user:user})
-}
