@@ -1,1 +1,1 @@
-var list = [{name:'lijz'},{name:'lucy'}] ;
+[{name:'lijz'},{name:'lucy'}]
