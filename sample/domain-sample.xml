@@ -1,0 +1,14 @@
+<domain >
+	<controller request="/login" response="/index.html" model=="/userSession.model"/>
+</domain>
+
+<domain baseValue="/userSession.model">
+	<controller request="/query" response="/customerList.html" model=="/customerList.model" />
+	<controller request="/query?type=1" method="get" responseJson="/customerList.json" />
+	<controller request="/query" response="/customerDetail.html" model="/customerDetailUpdate.model">		
+		<param name="type" value="update"/>
+		<import value="/protocol.model"/>
+		<import value="/friendsList.model"/>
+	</controller>	
+	<controller request="query?type=2" run="/customerQueryType.controller" import="xxx.model"/>
+</domain>
