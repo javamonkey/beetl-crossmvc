@@ -10,5 +10,5 @@
 		<import value="/protocol.model"/>
 		<import value="/friendsList.model"/>
 	</controller>	
-	<controller request="query?type=2" run="/customerQueryType.controller" import="xxx.model"/>
+	<controller request="query?type=2" runScript="/customerQueryType.controller" import="xxx.model"/>
 </domain>

@@ -17,19 +17,19 @@ public class App
     {
     	DeploymentInfo servletBuilder = Servlets.deployment()
     	        .setClassLoader(App.class.getClassLoader())
-    	        .setContextPath("/myapp")
-    	        .setDeploymentName("test.war")
+    	        .setContextPath("/")
+    	        .setDeploymentName("crossmvc.war")
     	        .addServlets(
     	                Servlets.servlet("IndexServlet", IndexServlet.class)    	                        
     	                        .addMapping("/*"));
 
     	DeploymentManager manager = Servlets.defaultContainer().addDeployment(servletBuilder);
     	manager.deploy();
-    	PathHandler path = Handlers.path(Handlers.redirect("/myapp"))
-    	        .addPrefixPath("/myapp", manager.start());
+    	PathHandler path = Handlers.path(Handlers.redirect("/"))
+    	        .addPrefixPath("/", manager.start());
 
     	Undertow server = Undertow.builder()
-    	        .addHttpListener(8080, "localhost")
+    	        .addHttpListener(7001, "localhost")
     	        .setHandler(path)
     	        .build();
     	server.start();
