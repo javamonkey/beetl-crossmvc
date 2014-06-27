@@ -7,10 +7,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.jdom2.Element;
+
+import pygmy.core.HttpRequest;
+import pygmy.core.HttpResponse;
 
 public class Controller {
 	DomainBaseConfig config ;
@@ -67,7 +67,7 @@ public class Controller {
 		
 	}
 	
-	public void execute(HttpServletRequest request, HttpServletResponse response){
+	public void execute(HttpRequest request, HttpResponse response){
 		
 	}
 	
@@ -75,8 +75,8 @@ public class Controller {
 	 * @param request
 	 * @return
 	 */
-	protected boolean isMatch(HttpServletRequest request){
-		if(request.getRequestURI().equals(this.requestPath)){
+	protected boolean isMatch(HttpRequest request){
+		if(request.getUrl().equals(this.requestPath)){
 			if(this.method!=null&&!method.equalsIgnoreCase(request.getMethod())){
 				return false ;
 			}
