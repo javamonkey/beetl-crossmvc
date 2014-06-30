@@ -1,5 +1,6 @@
 package org.beetl.corssmvc;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -20,7 +21,9 @@ public class Controller {
 	String responseJson;
 	String runScript ;
 	String method ;
+	
 	Map<String,String> paras = new HashMap<String,String>();
+	List<String> sectionPathList ;
 	Set<String> importValues = new HashSet<String>();
 	
 	
@@ -30,8 +33,7 @@ public class Controller {
 		this.requestPath = el.getAttributeValue("request");
 		int index = 0;
 		if((index=requestPath.indexOf("?"))!=-1){
-			String queryString = requestPath.substring(index+1);
-			
+			String queryString = requestPath.substring(index+1);			
 			String[] parasString = queryString.split("&");
 			for(String paraItem:parasString){
 				String[] para = paraItem.split("=");
@@ -67,35 +69,47 @@ public class Controller {
 		
 	}
 	
+	private void initUrlSection(){
+		Object[] result = Util.paraseURL(requestPath);
+		sectionPathList =(List) result[0];
+		paras = (Map)result[1];	
+	}
+	
 	public void execute(HttpRequest request, HttpResponse response){
 		
 	}
 	
-	/** é€ä¸ªéªŒè¯è¯·æ±‚æ˜¯å¦èƒ½è¢«æ­¤Controllerå¤„ç†
+	/**  ÏÖÔÚ½×¶Î¿¼ÂÇ¾«È·Æ¥Åä£¬ÏÂ¸ö°æ±¾¿¼ÂÇÍ¨Åä·ûµÈmvc³£¼û¿ò¼ÜÆ¥Åä
 	 * @param request
 	 * @return
 	 */
-	protected boolean isMatch(HttpRequest request){
-		if(request.getUrl().equals(this.requestPath)){
-			if(this.method!=null&&!method.equalsIgnoreCase(request.getMethod())){
-				return false ;
-			}
-			
-			if(!this.paras.isEmpty()){
-				for(Entry<String,String> entry:paras.entrySet()){
-					String real = request.getParameter(entry.getKey());
-					if(entry.getValue().equals(real)){
-						continue ;
-					}else{
-						return false;
-					}
-				}
-			}
-			
-			return true ;
-			
-		}else{
+	protected boolean isMatch(String[] urlSection,HttpRequest request){
+		if(urlSection.length!=this.sectionPathList.size()) return false;
+		
+		if(this.method!=null&&!method.equalsIgnoreCase(request.getMethod())){
 			return false ;
 		}
+		for(int i=0;i<urlSection.length;i++){
+			if(urlSection[i].equals(sectionPathList.get(i))){
+				continue ;
+			}else{
+				return false ;
+			}
+		}
+		
+		if(!this.paras.isEmpty()){
+			for(Entry<String,String> entry:paras.entrySet()){
+				String real = request.getParameter(entry.getKey());
+				if(entry.getValue().equals(real)){
+					continue ;
+				}else{
+					return false;
+				}
+			}
+		}
+		
+		return true ;
+		
+	
 	}
 }
