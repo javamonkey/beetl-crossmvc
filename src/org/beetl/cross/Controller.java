@@ -1,4 +1,4 @@
-package org.beetl.corssmvc;
+package org.beetl.cross;
 
 import java.util.ArrayList;
 import java.util.HashMap;

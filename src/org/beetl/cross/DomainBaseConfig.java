@@ -1,4 +1,4 @@
-package org.beetl.corssmvc;
+package org.beetl.cross;
 
 public class DomainBaseConfig {
 	private String baseValue="";
